@@ -1,12 +1,12 @@
 package com.example.demoAuvin.resumo.controllers;
 import com.example.demoAuvin.resumo.dto.ResumoCreateRequest;
-import com.example.demoAuvin.resumo.entities.Resumo;
-import com.example.demoAuvin.resumo.repositories.ResumoRepository;
 import com.example.demoAuvin.resumo.services.ResumoService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageRequest;
 import java.util.UUID;
 
 @RestController
@@ -33,6 +33,12 @@ public class ResumoController {
         return ResponseEntity.ok(resumoService.update(id, body));
     }
 
-    @GetMapping("/all")
-
+    @GetMapping
+    public ResponseEntity<?> findAll(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size
+    ) {
+        Pageable pageable = PageRequest.of(page, size);
+        return ResponseEntity.ok(resumoService.findAll(pageable));
+    }
 }
