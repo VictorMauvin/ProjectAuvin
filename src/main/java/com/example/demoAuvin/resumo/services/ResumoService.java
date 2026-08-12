@@ -43,7 +43,7 @@ public class ResumoService {
 
     public ResumoSaveResponse findById(UUID id) {
         Resumo resumo = resumoRepository.findById(id)
-                .orElseThrow(null);
+                .orElseThrow(() -> new RuntimeException("Resumo não encontrado"));
         return resumoMapper.toResumoSaveResponse(resumo);
     }
 
