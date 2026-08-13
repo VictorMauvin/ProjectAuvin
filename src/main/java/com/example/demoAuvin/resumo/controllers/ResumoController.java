@@ -1,6 +1,7 @@
 package com.example.demoAuvin.resumo.controllers;
 import com.example.demoAuvin.resumo.dto.ResumoCreateRequest;
 import com.example.demoAuvin.resumo.services.ResumoService;
+import org.apache.coyote.Response;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -40,5 +41,11 @@ public class ResumoController {
     ) {
         Pageable pageable = PageRequest.of(page, size);
         return ResponseEntity.ok(resumoService.findAll(pageable));
+    }
+
+    @GetMapping("/{id}/anotacoes")
+    public ResponseEntity<?> listOrdenada(@PathVariable("id") UUID id){
+
+        return ResponseEntity.ok(resumoService.findAllAnotacoesResumo(id));
     }
 }

@@ -1,8 +1,6 @@
 package com.example.demoAuvin.resumo.services;
 
-import com.example.demoAuvin.resumo.dto.ResumoCreateRequest;
-import com.example.demoAuvin.resumo.dto.ResumoListResponse;
-import com.example.demoAuvin.resumo.dto.ResumoSaveResponse;
+import com.example.demoAuvin.resumo.dto.*;
 import com.example.demoAuvin.resumo.entities.Resumo;
 import com.example.demoAuvin.resumo.mappers.ResumoMapper;
 import com.example.demoAuvin.resumo.repositories.ResumoRepository;
@@ -12,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import org.springframework.data.domain.Pageable;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -75,5 +74,9 @@ public class ResumoService {
                         resumo.getConteudo(),
                         resumo.getDt_criacao()
                 ));
+    }
+
+    public List<ResumoAnotacaoResponse> findAllAnotacoesResumo(UUID id) {
+        return resumoRepository.findAllAnotacoesResumo(id);
     }
 }
