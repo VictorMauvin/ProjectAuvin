@@ -26,11 +26,9 @@ public class AnotacaoFavorito {
     private boolean status;
 
     @Column(name = "usuario_id")
-    private int usuario_id;
+    private int usuarioId;
 
     @ManyToOne
     @JoinColumn(name = "anotacao_id")
     private Anotacao anotacao;
-
-
 }

@@ -25,10 +25,7 @@ public class AnotacaoFavController {
     }
 
     @PostMapping("/{id}/favoritos")
-    public ResponseEntity<?> addFavorito(@PathVariable ("id") UUID id){
-
+    public ResponseEntity<?> addFavorito(@PathVariable("id") UUID id){
         return ResponseEntity.ok(anotacaoFavService.addFavorito(id));
-
     }
-
 }
