@@ -70,6 +70,7 @@ public class ResumoService {
     public Page<ResumoListResponse> findAll(Pageable pageable) {
         return resumoRepository.findAll(pageable)
                 .map(resumo -> new ResumoListResponse(
+                        resumo.getId(),
                         resumo.getTitulo(),
                         resumo.getConteudo(),
                         resumo.getDt_criacao()

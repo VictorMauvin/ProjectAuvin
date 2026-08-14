@@ -12,6 +12,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/resumos")
+@CrossOrigin("*")
 public class ResumoController {
     private ResumoService resumoService;
 
