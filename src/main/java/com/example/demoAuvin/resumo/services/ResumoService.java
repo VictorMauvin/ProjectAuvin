@@ -77,8 +77,8 @@ public class ResumoService {
                         resumo.getTitulo(),
                         resumo.getConteudo(),
                         resumo.getDt_criacao(),
-                        resumoFavRepository.existsByResumo_Id(resumo.getId())
-                        ));
+                        resumoFavRepository.existsByResumo_IdAndStatusTrue(resumo.getId())
+                ));
     }
 
     public List<ResumoAnotacaoResponse> findAllAnotacoesResumo(UUID id) {
