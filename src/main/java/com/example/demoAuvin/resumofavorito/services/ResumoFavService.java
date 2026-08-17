@@ -47,6 +47,15 @@ public class ResumoFavService {
         return null;
     }
 
+    public boolean findFavorito(UUID id){
+        Resumo_Favorito resFav = resumoFavRepository.findById(id).orElseThrow();
+
+        if(resFav != null){
+            return resFav.isStatus();
+        }
+        return false;
+    }
+
 
 
 }

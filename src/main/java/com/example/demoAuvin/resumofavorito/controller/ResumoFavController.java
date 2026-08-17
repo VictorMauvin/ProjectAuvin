@@ -25,6 +25,12 @@ public class ResumoFavController {
 
         return ResponseEntity.ok(resumoFavService.addFavorito(id));
 
+    }
+
+    @GetMapping("/{id}/favorito")
+    public ResponseEntity<?> getFavorito(@PathVariable("id")UUID id){
+
+        return ResponseEntity.ok(resumoFavService.findFavorito(id));
 
     }
 
