@@ -4,6 +4,7 @@ import com.example.demoAuvin.resumo.dto.*;
 import com.example.demoAuvin.resumo.entities.Resumo;
 import com.example.demoAuvin.resumo.mappers.ResumoMapper;
 import com.example.demoAuvin.resumo.repositories.ResumoRepository;
+import com.example.demoAuvin.resumofavorito.repositories.ResumoFavRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,10 @@ import java.util.UUID;
 public class ResumoService {
     private ResumoRepository resumoRepository;
     private ResumoMapper resumoMapper;
+    private ResumoFavRepository resumoFavRepository;
 
-    public ResumoService(ResumoRepository resumoRepository,ResumoMapper resumoMapper){
+    public ResumoService(ResumoRepository resumoRepository,ResumoMapper resumoMapper, ResumoFavRepository resumoFavRepository){
+        this.resumoFavRepository = resumoFavRepository;
         this.resumoRepository = resumoRepository;
         this.resumoMapper = resumoMapper;
     }
@@ -73,8 +76,9 @@ public class ResumoService {
                         resumo.getId(),
                         resumo.getTitulo(),
                         resumo.getConteudo(),
-                        resumo.getDt_criacao()
-                ));
+                        resumo.getDt_criacao(),
+                        resumoFavRepository.existsByResumo_Id(resumo.getId())
+                        ));
     }
 
     public List<ResumoAnotacaoResponse> findAllAnotacoesResumo(UUID id) {

@@ -10,5 +10,6 @@ import java.util.UUID;
 public interface ResumoFavRepository extends JpaRepository<Resumo_Favorito, UUID> {
 
     Resumo_Favorito findByResumo_id(UUID id);
+    boolean existsByResumo_Id(UUID id);
 
 }

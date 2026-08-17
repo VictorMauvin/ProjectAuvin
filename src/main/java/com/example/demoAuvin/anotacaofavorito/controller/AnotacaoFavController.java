@@ -5,15 +5,14 @@ import com.example.demoAuvin.anotacao.services.AnotacaoService;
 import com.example.demoAuvin.anotacaofavorito.dto.AnotacaoFavAddResponse;
 import com.example.demoAuvin.anotacaofavorito.services.AnotacaoFavService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/anotacoes")
+@CrossOrigin("*")
+
 public class AnotacaoFavController {
 
     AnotacaoFavService anotacaoFavService;

@@ -7,6 +7,7 @@ public record ResumoListResponse(
         UUID id,
         String titulo,
         String conteudo,
-        LocalDateTime dataCriacao
+        LocalDateTime dataCriacao,
+        boolean favorito
 ) {
 }
