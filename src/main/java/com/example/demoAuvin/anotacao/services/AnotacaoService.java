@@ -5,9 +5,12 @@ import com.example.demoAuvin.anotacao.dto.AnotacaoCreateResponse;
 import com.example.demoAuvin.anotacao.entities.Anotacao;
 import com.example.demoAuvin.anotacao.mappers.AnotacaoMapper;
 import com.example.demoAuvin.anotacao.repositories.AnotacaoRepository;
+import com.example.demoAuvin.anotacaofavorito.entities.AnotacaoFavorito;
 import com.example.demoAuvin.anotacaofavorito.repositories.AnotacaoFavRepository;
+import com.example.demoAuvin.resumo.dto.ResumoSaveResponse;
 import com.example.demoAuvin.resumo.entities.Resumo;
 import com.example.demoAuvin.resumo.repositories.ResumoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -50,6 +53,34 @@ public class AnotacaoService {
 
         return anotacao;
 
+    }
+
+    @Transactional
+    public boolean delete(UUID id) {
+        if (!anotacaoRepository.existsById(id))
+            return false;
+
+        AnotacaoFavorito favorita = anotacaoFavRepository.findByAnotacao_Id(id);
+
+        if (favorita != null)
+            anotacaoFavRepository.deleteById(favorita.getId());
+
+        anotacaoRepository.deleteById(id);
+
+        return true;
+    }
+
+    @Transactional
+    public AnotacaoCreateResponse update(UUID id, String texto) {
+        Anotacao anotacao = anotacaoRepository.findById(id)
+                .orElseThrow(() ->
+                        new RuntimeException("Anotação não encontrada"));
+
+        anotacao.setTexto(texto);
+
+        Anotacao atualizada = anotacaoRepository.save(anotacao);
+
+        return anotacaoMapper.toAnotacaoCreateResponse(atualizada);
     }
 
 }

@@ -8,11 +8,10 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AnotacaoMapper {
 
-
-    //Pensamos em usar o objeto inteiro de resumo, mas chegamos nessa opcao, idem ambas
-
-    @Mapping(source = "id", target = "idAnotacao")
+    @Mapping(source = "id", target = "id")
     @Mapping(source = "resumo.titulo", target = "titulo")
     @Mapping(source = "resumo.conteudo", target = "conteudo")
+    @Mapping(source = "dt_criacao", target = "dataCriacao")
+    @Mapping(target = "favorita", constant = "false")
     AnotacaoCreateResponse toAnotacaoCreateResponse(Anotacao anotacao);
 }
