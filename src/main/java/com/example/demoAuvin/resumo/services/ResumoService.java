@@ -49,7 +49,11 @@ public class ResumoService {
                 .orElseThrow(() -> new RuntimeException("Resumo não encontrado"));
 
         Resumo_Favorito res = resumoFavRepository.findByResumo_id(resumo.getId());
-        boolean favorito = res.isStatus();
+        boolean favorito = false;
+        if (res != null) {
+            favorito = res.isStatus();
+        }
+
         return resumoMapper.toResumoFindFavResonse(resumo, favorito);
     }
 
