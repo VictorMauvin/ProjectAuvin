@@ -4,6 +4,7 @@ import com.example.demoAuvin.resumo.dto.*;
 import com.example.demoAuvin.resumo.entities.Resumo;
 import com.example.demoAuvin.resumo.mappers.ResumoMapper;
 import com.example.demoAuvin.resumo.repositories.ResumoRepository;
+import com.example.demoAuvin.resumofavorito.entities.Resumo_Favorito;
 import com.example.demoAuvin.resumofavorito.repositories.ResumoFavRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.data.domain.Page;
@@ -43,10 +44,13 @@ public class ResumoService {
         return null;
     }
 
-    public ResumoSaveResponse findById(UUID id) {
+    public ResumoFindFavResponse findById(UUID id) {
         Resumo resumo = resumoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Resumo não encontrado"));
-        return resumoMapper.toResumoSaveResponse(resumo);
+
+        Resumo_Favorito res = resumoFavRepository.findByResumo_id(resumo.getId());
+        boolean favorito = res.isStatus();
+        return resumoMapper.toResumoFindFavResonse(resumo, favorito);
     }
 
     @Transactional
