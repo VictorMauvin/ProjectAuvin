@@ -1,6 +1,7 @@
 package com.example.demoAuvin.resumo.services;
 
 import com.example.demoAuvin.resumo.dto.*;
+import com.example.demoAuvin.anotacaofavorito.repositories.AnotacaoFavRepository;
 import com.example.demoAuvin.resumo.entities.Resumo;
 import com.example.demoAuvin.resumo.mappers.ResumoMapper;
 import com.example.demoAuvin.resumo.repositories.ResumoRepository;
@@ -21,11 +22,15 @@ public class ResumoService {
     private ResumoRepository resumoRepository;
     private ResumoMapper resumoMapper;
     private ResumoFavRepository resumoFavRepository;
+    private AnotacaoFavRepository anotacaoFavRepository;
 
-    public ResumoService(ResumoRepository resumoRepository,ResumoMapper resumoMapper, ResumoFavRepository resumoFavRepository){
+    public ResumoService(ResumoRepository resumoRepository, ResumoMapper resumoMapper,
+                         ResumoFavRepository resumoFavRepository,
+                         AnotacaoFavRepository anotacaoFavRepository){
         this.resumoFavRepository = resumoFavRepository;
         this.resumoRepository = resumoRepository;
         this.resumoMapper = resumoMapper;
+        this.anotacaoFavRepository = anotacaoFavRepository;
     }
 
     @Transactional
@@ -78,6 +83,21 @@ public class ResumoService {
         }
 
         return null;
+    }
+
+    @Transactional
+    public boolean delete(UUID id) {
+        if (!resumoRepository.existsById(id)) {
+            return false;
+        }
+
+
+        resumoFavRepository.deleteByResumoId(id);
+        anotacaoFavRepository.deleteByResumoId(id);
+        resumoRepository.deleteAnotacoesByResumoId(id);
+        resumoRepository.deleteById(id);
+
+        return true;
     }
 
     public Page<ResumoListResponse> findAll(Pageable pageable) {
