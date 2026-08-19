@@ -80,8 +80,12 @@ public class AnotacaoService {
 
         Anotacao atualizada = anotacaoRepository.save(anotacao);
         AnotacaoFavorito anotacaoFavorito  = anotacaoFavRepository.findByAnotacao_Id(id);
-        boolean favorito = anotacaoFavorito.isStatus();
-
+        boolean favorito;
+        if (anotacaoFavorito != null) {
+            favorito = anotacaoFavorito.isStatus();
+        }
+        else
+            favorito = false;
         return anotacaoMapper.toAnotacaoCreateResponse(atualizada,favorito);
     }
 

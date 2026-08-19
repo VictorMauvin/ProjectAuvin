@@ -64,7 +64,7 @@ public class ResumoService {
     }
 
     @Transactional
-    public ResumoSaveResponse update(UUID id, ResumoCreateRequest body) {
+    public ResumoListResponse update(UUID id, ResumoCreateRequest body) {
         Resumo resumo = resumoRepository.findById(id).orElse(null);
 
         if (resumo != null) {
@@ -79,7 +79,15 @@ public class ResumoService {
 
             resumo = resumoRepository.save(resumo);
 
-            return resumoMapper.toResumoSaveResponse(resumo);
+            boolean favorito;
+            Resumo_Favorito resumoFavorito = resumoFavRepository.findByResumo_id(id);
+            if (resumoFavorito != null) {
+                favorito = resumoFavorito.isStatus();
+            } else {
+                favorito = false;
+            }
+
+            return resumoMapper.toResumoListResponse(resumo, favorito);
         }
 
         return null;
