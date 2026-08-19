@@ -8,10 +8,10 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface AnotacaoMapper {
 
-    @Mapping(source = "id", target = "id")
-    @Mapping(source = "resumo.titulo", target = "titulo")
-    @Mapping(source = "resumo.conteudo", target = "conteudo")
-    @Mapping(source = "dt_criacao", target = "dataCriacao")
-    @Mapping(target = "favorita", constant = "false")
-    AnotacaoCreateResponse toAnotacaoCreateResponse(Anotacao anotacao);
+    @Mapping(source = "anotacao.id", target = "id")
+    @Mapping(source = "anotacao.resumo.titulo", target = "titulo")
+    @Mapping(source = "anotacao.resumo.conteudo", target = "conteudo")
+    @Mapping(source = "anotacao.dt_criacao", target = "dataCriacao")
+    @Mapping(source = "favorito", target = "favorita")
+    AnotacaoCreateResponse toAnotacaoCreateResponse(Anotacao anotacao, boolean favorito);
 }

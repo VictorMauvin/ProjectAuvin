@@ -44,7 +44,7 @@ public class ResumoService {
         return null;
     }
 
-    public ResumoFindFavResponse findById(UUID id) {
+    public ResumoListResponse findById(UUID id) {
         Resumo resumo = resumoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Resumo não encontrado"));
 
@@ -54,7 +54,8 @@ public class ResumoService {
             favorito = res.isStatus();
         }
 
-        return resumoMapper.toResumoFindFavResonse(resumo, favorito);
+        return resumoMapper.toResumoListResponse(resumo,favorito);
+//        return resumoMapper.toResumoFindFavResonse(resumo, favorito);
     }
 
     @Transactional
@@ -64,6 +65,7 @@ public class ResumoService {
         if (resumo != null) {
             if (body.titulo() != null) {
                 resumo.setTitulo(body.titulo());
+
             }
 
             if (body.conteudo() != null) {

@@ -42,7 +42,7 @@ public class AnotacaoService {
             anotacao.setResumo(resumo);
             anotacao = anotacaoRepository.save(anotacao);
 
-            return anotacaoMapper.toAnotacaoCreateResponse(anotacao);
+            return anotacaoMapper.toAnotacaoCreateResponse(anotacao, false);
         }else{
             return null;
         }
@@ -79,8 +79,10 @@ public class AnotacaoService {
         anotacao.setTexto(texto);
 
         Anotacao atualizada = anotacaoRepository.save(anotacao);
+        AnotacaoFavorito anotacaoFavorito  = anotacaoFavRepository.findByAnotacao_Id(id);
+        boolean favorito = anotacaoFavorito.isStatus();
 
-        return anotacaoMapper.toAnotacaoCreateResponse(atualizada);
+        return anotacaoMapper.toAnotacaoCreateResponse(atualizada,favorito);
     }
 
 }
